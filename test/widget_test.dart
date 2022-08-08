@@ -20,7 +20,7 @@ void main() {
     expect(find.text('0'), findsOneWidget);
     expect(find.text('1'), findsNothing);
 
-    // Tap the '+' icon and trigger a frame.
+    // Tap the increment button and trigger a frame.
     await tester.tap(find.byType(ElevatedButton));
     await tester.pump();
 
@@ -28,4 +28,14 @@ void main() {
     expect(find.text('0'), findsNothing);
     expect(find.text('1'), findsOneWidget);
   });
+
+  testWidgets('the counter state is not shared between tests', (tester) async {
+    await tester.pumpWidget(const ProviderScope(child: MyApp()));
+
+
+    // the state is again 0 no need setUp or teardown
+    expect(find.text('0'), findsOneWidget);
+    expect(find.text('1'), findsNothing);
+
+  },);
 }
